@@ -14,6 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Git Users"
 include ':app'
-include ':api'
 include ':core'
-include ':feature:usersscreen'
+include ':presentation:users-screen'
+include ':data'
+include ':domain'

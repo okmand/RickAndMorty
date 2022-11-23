@@ -1,20 +1,23 @@
 package com.okmyan.gitusers.di
 
 import android.app.Application
-import com.okmyan.gitusers.api.DataService
+import com.okmyan.gitusers.data.di.RepositoryModule
+import com.okmyan.gitusers.domain.usecases.UsersUseCase
 import com.okmyan.gitusers.usersscreen.di.UsersScreenDependencies
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Module
-import dagger.Provides
-import javax.inject.Qualifier
 import javax.inject.Scope
 
 @AppScope
-@Component(modules = [AppModule::class])
+@Component(
+    modules = [
+        AppModule::class,
+        RepositoryModule::class,
+    ]
+)
 interface AppComponent : UsersScreenDependencies {
 
-    override val dataService: DataService
+    override val usersUseCase: UsersUseCase
 
     @Component.Builder
     interface Builder {
@@ -29,18 +32,6 @@ interface AppComponent : UsersScreenDependencies {
     }
 
 }
-
-@Module
-class AppModule {
-
-    @AppScope
-    @Provides
-    fun provideDataService(@InfoForDataServiceQualifier info: String) = DataService(info)
-
-}
-
-@Qualifier
-annotation class InfoForDataServiceQualifier
 
 @Scope
 annotation class AppScope

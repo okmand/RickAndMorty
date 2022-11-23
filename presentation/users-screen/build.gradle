@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
@@ -8,13 +8,11 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.okmyan.gitusers"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -23,7 +21,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,23 +37,26 @@ android {
 
 dependencies {
 
-    implementation project(':data')
-    implementation project(':presentation:users-screen')
-    implementation project(':domain')
+    implementation project(":data")
+    implementation project(":domain")
+    implementation project(":core")
 
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    // Navigation in fragments
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    // Fragments
+    implementation 'androidx.fragment:fragment-ktx:1.5.4'
 
     // Dagger 2
     implementation "com.google.dagger:dagger:2.44"
     kapt "com.google.dagger:dagger-compiler:2.44"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    // Data binding
+    implementation 'com.android.databinding:viewbinding:7.3.1'
 
 }
