@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Git Users"
+rootProject.name = "Rick and Morty"
 include ':app'
 include ':core'
 include ':presentation:users-screen'
