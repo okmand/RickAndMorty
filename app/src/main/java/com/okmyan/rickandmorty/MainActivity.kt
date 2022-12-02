@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.okmyan.rickandmorty.usersscreen.UsersScreenFragment
+import com.okmyan.rickandmorty.charactersscreen.CharactersScreenFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -13,14 +13,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val fragmentManager = supportFragmentManager
         if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
             fragmentManager.commit {
-                add<UsersScreenFragment>(R.id.fragment_container, FRAGMENT_USERS)
+                add<CharactersScreenFragment>(R.id.fragment_container, FRAGMENT_CHARACTERS)
             }
         }
     }
 
     private companion object {
 
-        private const val FRAGMENT_USERS = "users"
+        private const val FRAGMENT_CHARACTERS = "characters"
 
     }
 }
