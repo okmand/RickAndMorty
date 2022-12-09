@@ -2,20 +2,26 @@ package com.okmyan.rickandmorty.data.paging.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.google.common.base.Optional
 import com.okmyan.rickandmorty.data.dto.ResponseInfoDto
 import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.parsers.UriParser
 import com.okmyan.rickandmorty.data.service.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
 
-class CharactersPagingDataSource constructor(
-    private val service: CharactersApi
+class CharactersPagingDataSource(
+    private val service: CharactersApi,
+    private val lifeStatus: Optional<String>,
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         val pageNumber = params.key ?: INITIAL_VALUE
         return try {
-            val response = service.getCharacters(pageNumber)
+            val response = if (lifeStatus.isPresent) {
+                service.getCharacters(page = pageNumber, status = lifeStatus.get())
+            } else {
+                service.getCharacters(page = pageNumber)
+            }
             val pagedResponseDto = response.body() ?: ResponseInfoDto(null, null)
             val pagedResponse = InfoMapper.mapResponseInfo(pagedResponseDto)
 

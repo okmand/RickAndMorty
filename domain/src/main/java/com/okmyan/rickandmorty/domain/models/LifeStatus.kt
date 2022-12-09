@@ -14,6 +14,7 @@ sealed class LifeStatus(val value: String) {
         const val STATUS_ALIVE = "Alive"
         const val STATUS_UNKNOWN = "Unknown"
         const val STATUS_DEAD = "Dead"
+        const val EMPTY_VALUE = "-"
     }
 
 }

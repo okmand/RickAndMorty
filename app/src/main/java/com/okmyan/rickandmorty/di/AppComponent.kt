@@ -6,6 +6,7 @@ import com.okmyan.rickandmorty.data.di.DataModule
 import com.okmyan.rickandmorty.data.di.NetworkModule
 import com.okmyan.rickandmorty.data.di.RepositoryModule
 import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
+import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope
@@ -21,6 +22,8 @@ import javax.inject.Scope
 interface AppComponent : CharactersScreenDependencies {
 
     override val charactersUseCase: CharactersUseCase
+
+    override val lifeStatusesUseCase: LifeStatusesUseCase
 
     @Component.Builder
     interface Builder {

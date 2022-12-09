@@ -8,13 +8,13 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.okmyan.rickandmorty"
+        applicationId 'com.okmyan.rickandmorty'
         minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -44,22 +44,22 @@ dependencies {
     implementation project(':presentation:characters-screen')
     implementation project(':domain')
 
-    // UI
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-
     // Tests
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-    // Navigation in fragments
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-
     // Dagger 2
-    implementation "com.google.dagger:dagger:2.44"
-    kapt "com.google.dagger:dagger-compiler:2.44"
+    implementation 'com.google.dagger:dagger:2.44.2'
+    kapt 'com.google.dagger:dagger-compiler:2.44.2'
 
     // Networking
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // UI
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+
+    // Navigation in fragments
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
 
 }

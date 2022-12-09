@@ -11,8 +11,8 @@ android {
         minSdk 21
         targetSdk 33
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -33,7 +33,7 @@ android {
 dependencies {
 
     // Dagger 2
-    implementation "com.google.dagger:dagger:2.44"
-    kapt "com.google.dagger:dagger-compiler:2.44"
+    implementation 'com.google.dagger:dagger:2.44.2'
+    kapt 'com.google.dagger:dagger-compiler:2.44.2'
 
 }

@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="power_spinner_background">#00FF99</color>
+
     <color name="status_alive">#30FF38</color>
     <color name="status_unknown">#999999</color>
     <color name="status_dead">#FF2020</color>

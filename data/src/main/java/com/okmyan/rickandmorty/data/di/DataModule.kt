@@ -1,7 +1,7 @@
 package com.okmyan.rickandmorty.data.di
 
-import com.okmyan.rickandmorty.data.paging.datasource.CharactersPagingDataSource
 import com.okmyan.rickandmorty.data.service.CharactersApi
+import com.okmyan.rickandmorty.data.service.LifeStatusesService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,8 +15,6 @@ class DataModule {
     }
 
     @Provides
-    fun providePagingDataSource(charactersApi: CharactersApi): CharactersPagingDataSource {
-        return CharactersPagingDataSource(charactersApi)
-    }
+    fun provideLifeStatusesService() = LifeStatusesService()
 
 }

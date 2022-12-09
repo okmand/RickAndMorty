@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.okmyan.rickandmorty.charactersscreen.CharactersScreenFragment
 import com.okmyan.rickandmorty.core.Feature
 import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
+import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
 import dagger.Component
 import kotlin.properties.Delegates.notNull
 
@@ -27,6 +28,8 @@ internal interface CharactersScreenComponent {
 interface CharactersScreenDependencies {
 
     val charactersUseCase: CharactersUseCase
+
+    val lifeStatusesUseCase: LifeStatusesUseCase
 
 }
 

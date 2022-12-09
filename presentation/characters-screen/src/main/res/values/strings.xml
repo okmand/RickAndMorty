@@ -3,4 +3,5 @@
     <string name="retry">Retry</string>
     <string name="check_connection">Check your internet connection</string>
     <string name="life_status_description">Life status</string>
+    <string name="life_statuses_spinner_title">Life status</string>
 </resources>

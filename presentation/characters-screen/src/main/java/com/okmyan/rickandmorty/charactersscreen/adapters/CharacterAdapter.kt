@@ -49,7 +49,7 @@ class CharacterAdapter @Inject constructor() :
             lifeStatus.text = character.status.value
 
             val imageUri = Uri.parse(character.image)
-            Picasso.with(context).load(imageUri)
+            Picasso.get().load(imageUri)
                 .placeholder(R.drawable.ic_ram_avatar)
                 .error(R.drawable.ic_ram_avatar)
                 .into(characterAvatar)

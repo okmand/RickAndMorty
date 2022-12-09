@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id "org.jetbrains.kotlin.plugin.serialization" version "1.5.31"
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.31'
     id 'kotlin-kapt'
 }
 
@@ -12,8 +12,8 @@ android {
         minSdk 21
         targetSdk 33
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -33,7 +33,7 @@ android {
 
 dependencies {
 
-    implementation project(":domain")
+    implementation project(':domain')
 
     // Tests
     testImplementation 'junit:junit:4.13.2'
@@ -41,19 +41,22 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     // Dagger 2
-    implementation "com.google.dagger:dagger:2.44"
-    kapt "com.google.dagger:dagger-compiler:2.44"
-
-    // Serialization
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+    implementation 'com.google.dagger:dagger:2.44.2'
+    kapt 'com.google.dagger:dagger-compiler:2.44.2'
 
     // Networking
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10'
+    implementation 'com.google.code.gson:gson:2.10'
 
     // Paging
-    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation 'androidx.paging:paging-runtime:3.2.0-alpha03'
+
+    // Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+
+    // Optional
+    implementation('com.google.guava:guava:31.1-jre')
 
 }

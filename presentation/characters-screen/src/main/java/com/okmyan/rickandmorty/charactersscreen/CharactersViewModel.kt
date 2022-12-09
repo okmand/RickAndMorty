@@ -8,27 +8,53 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.okmyan.rickandmorty.domain.models.Character
 import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
-import kotlinx.coroutines.flow.Flow
+import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
 internal class CharactersViewModel(
     private val charactersUseCase: CharactersUseCase,
+    private val lifeStatusesUseCase: LifeStatusesUseCase,
 ) : ViewModel() {
 
     private lateinit var _charactersFlow: Flow<PagingData<Character>>
     val charactersFlow: Flow<PagingData<Character>>
         get() = _charactersFlow
 
+    private lateinit var _lifeStatusesFlow: Flow<List<String>>
+    val lifeStatusesFlow: Flow<List<String>>
+        get() = _lifeStatusesFlow
+
+    private val currentLifeStatusFlow: MutableStateFlow<String> = MutableStateFlow("")
+
     init {
         getCharacters()
+        getLifeStatuses()
     }
 
+    fun setCurrentLifeStatus(lifeStatus: String) {
+        currentLifeStatusFlow.value = lifeStatus
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getCharacters() {
         viewModelScope.launch {
+            _charactersFlow = currentLifeStatusFlow
+                .flatMapLatest { status -> charactersUseCase.getCharacters(status) }
+                .cachedIn(viewModelScope)
+                .catch { e ->
+                    Log.d(TAG, "Error ", e)
+                }
+        }
+    }
+
+    private fun getLifeStatuses() {
+        viewModelScope.launch {
             try {
-                _charactersFlow = charactersUseCase.getCharacters().cachedIn(viewModelScope)
+                _lifeStatusesFlow = lifeStatusesUseCase.execute()
             } catch (e: Exception) {
                 Log.d(TAG, "Error ", e)
             }
@@ -37,12 +63,13 @@ internal class CharactersViewModel(
 
     class Factory @Inject constructor(
         private val charactersUseCase: Provider<CharactersUseCase>,
+        private val lifeStatusesUseCase: Provider<LifeStatusesUseCase>,
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             require(modelClass == CharactersViewModel::class.java)
-            return CharactersViewModel(charactersUseCase.get()) as T
+            return CharactersViewModel(charactersUseCase.get(), lifeStatusesUseCase.get()) as T
         }
 
     }
