@@ -43,8 +43,8 @@ dependencies {
 
     // Tests
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // Dagger 2
     implementation 'com.google.dagger:dagger:2.44.2'
@@ -56,19 +56,19 @@ dependencies {
     // UI
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.github.skydoves:powerspinner:1.2.4'
 
     // Fragments
-    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
 
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Data binding
-    implementation 'com.android.databinding:viewbinding:7.3.1'
+    implementation 'com.android.databinding:viewbinding:7.4.0'
 
     // Paging
     implementation 'androidx.paging:paging-runtime:3.2.0-alpha03'

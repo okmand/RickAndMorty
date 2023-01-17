@@ -1,9 +1,7 @@
 package com.okmyan.rickandmorty.charactersscreen
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.okmyan.rickandmorty.domain.models.Character
@@ -20,30 +18,34 @@ internal class CharactersViewModel(
     private val lifeStatusesUseCase: LifeStatusesUseCase,
 ) : ViewModel() {
 
-    private lateinit var _charactersFlow: Flow<PagingData<Character>>
+    private var _charactersFlow: Flow<PagingData<Character>> = flowOf()
     val charactersFlow: Flow<PagingData<Character>>
         get() = _charactersFlow
 
-    private lateinit var _lifeStatusesFlow: Flow<List<String>>
+    private var _lifeStatusesFlow: Flow<List<String>> = flowOf()
     val lifeStatusesFlow: Flow<List<String>>
         get() = _lifeStatusesFlow
 
-    private val currentLifeStatusFlow: MutableStateFlow<String> = MutableStateFlow("")
+    private val _currentLifeStatusFlow: MutableStateFlow<String> = MutableStateFlow("")
+    val currentLifeStatusFlow: StateFlow<String>
+        get() = _currentLifeStatusFlow
 
     init {
         getCharacters()
         getLifeStatuses()
     }
 
-    fun setCurrentLifeStatus(lifeStatus: String) {
-        currentLifeStatusFlow.value = lifeStatus
+    fun setCurrentLifeStatus(lifeStatus: String = "") {
+        _currentLifeStatusFlow.value = lifeStatus
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun getCharacters() {
         viewModelScope.launch {
-            _charactersFlow = currentLifeStatusFlow
-                .flatMapLatest { status -> charactersUseCase.getCharacters(status) }
+            _charactersFlow = _currentLifeStatusFlow
+                .flatMapLatest { status ->
+                    charactersUseCase.getCharacters(status)
+                }
                 .cachedIn(viewModelScope)
                 .catch { e ->
                     Log.d(TAG, "Error ", e)

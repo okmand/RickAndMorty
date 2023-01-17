@@ -18,8 +18,10 @@ import com.okmyan.rickandmorty.domain.models.LifeStatus.Companion.EMPTY_VALUE
 import com.skydoves.powerspinner.DefaultSpinnerAdapter
 import com.skydoves.powerspinner.PowerSpinnerView
 import dagger.Lazy
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
@@ -66,6 +68,14 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             setLifeStatuses(binding.lifeStatusesSpinner, statuses)
         }.launchIn(lifecycleScope)
 
+        lifecycleScope.launch {
+            val status = charactersViewModel.currentLifeStatusFlow
+                .firstOrNull()
+            status?.let {
+                setTextToSpinner(binding.lifeStatusesSpinner, it)
+            }
+        }
+
     }
 
     private fun onRefreshListener(swipeRefreshLayout: SwipeRefreshLayout) {
@@ -78,13 +88,19 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             setSpinnerAdapter(DefaultSpinnerAdapter(this))
             setItems(statuses)
             setOnSpinnerItemSelectedListener<String> { _, oldItem, _, newItem ->
+                setTextToSpinner(spinner, newItem)
                 if (oldItem != newItem) {
-                    if (newItem == EMPTY_VALUE) {
-                        spinner.text = getString(R.string.life_statuses_spinner_title)
-                    }
                     charactersViewModel.setCurrentLifeStatus(newItem)
                 }
             }
+        }
+    }
+
+    private fun setTextToSpinner(spinner: PowerSpinnerView, status: String) {
+        if (status == EMPTY_VALUE) {
+            spinner.text = getString(R.string.life_statuses_spinner_title)
+        } else {
+            spinner.text = status
         }
     }
 

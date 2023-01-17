@@ -8,6 +8,7 @@
     tools:context=".CharactersScreenFragment">
 
     <com.skydoves.powerspinner.PowerSpinnerView
+        android:layout_margin="@dimen/general_indent"
         android:id="@+id/life_statuses_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

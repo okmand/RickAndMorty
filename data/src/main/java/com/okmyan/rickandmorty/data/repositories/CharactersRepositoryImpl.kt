@@ -9,7 +9,9 @@ import com.okmyan.rickandmorty.data.paging.datasource.CharactersPagingDataSource
 import com.okmyan.rickandmorty.data.service.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
 import com.okmyan.rickandmorty.domain.repositories.CharactersRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
@@ -18,8 +20,8 @@ class CharactersRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacters(
         lifeStatus: Optional<String>
-    ): Flow<PagingData<Character>> {
-        return Pager(
+    ): Flow<PagingData<Character>> = withContext(Dispatchers.IO) {
+        return@withContext Pager(
             config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = true),
             pagingSourceFactory = {
                 CharactersPagingDataSource(

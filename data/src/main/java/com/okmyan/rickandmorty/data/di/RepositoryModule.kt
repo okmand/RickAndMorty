@@ -1,5 +1,6 @@
 package com.okmyan.rickandmorty.data.di
 
+import com.okmyan.rickandmorty.core.scopes.AppScope
 import com.okmyan.rickandmorty.data.repositories.CharactersRepositoryImpl
 import com.okmyan.rickandmorty.data.repositories.LifeStatusesRepositoryImpl
 import com.okmyan.rickandmorty.domain.repositories.CharactersRepository
@@ -11,6 +12,7 @@ import dagger.Module
 interface RepositoryModule {
 
     @Suppress("FunctionName")
+    @AppScope
     @Binds
     fun bindCharactersRepositoryImpl_to_CharactersRepository(charactersRepositoryImpl: CharactersRepositoryImpl): CharactersRepository
 

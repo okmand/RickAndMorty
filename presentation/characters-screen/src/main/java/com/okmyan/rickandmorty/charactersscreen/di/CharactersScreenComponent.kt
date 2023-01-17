@@ -2,14 +2,16 @@ package com.okmyan.rickandmorty.charactersscreen.di
 
 import androidx.lifecycle.ViewModel
 import com.okmyan.rickandmorty.charactersscreen.CharactersScreenFragment
-import com.okmyan.rickandmorty.core.Feature
+import com.okmyan.rickandmorty.core.scopes.FeatureScope
 import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
 import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
 import dagger.Component
 import kotlin.properties.Delegates.notNull
 
-@Feature
-@Component(dependencies = [CharactersScreenDependencies::class])
+@FeatureScope
+@Component(
+    dependencies = [CharactersScreenDependencies::class]
+)
 internal interface CharactersScreenComponent {
 
     fun inject(fragment: CharactersScreenFragment)

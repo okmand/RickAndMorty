@@ -8,25 +8,29 @@ import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.parsers.UriParser
 import com.okmyan.rickandmorty.data.service.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class CharactersPagingDataSource(
     private val service: CharactersApi,
     private val lifeStatus: Optional<String>,
 ) : PagingSource<Int, Character>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
-        val pageNumber = params.key ?: INITIAL_VALUE
-        return try {
-            val response = if (lifeStatus.isPresent) {
-                service.getCharacters(page = pageNumber, status = lifeStatus.get())
-            } else {
-                service.getCharacters(page = pageNumber)
-            }
-            val pagedResponseDto = response.body() ?: ResponseInfoDto(null, null)
-            val pagedResponse = InfoMapper.mapResponseInfo(pagedResponseDto)
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> =
+        withContext(Dispatchers.IO) {
+            val pageNumber = params.key ?: INITIAL_VALUE
+            return@withContext try {
+                val response = if (lifeStatus.isPresent) {
+                    service.getCharacters(page = pageNumber, status = lifeStatus.get())
+                } else {
+                    service.getCharacters(page = pageNumber)
+                }
+                val pagedResponseDto = response.body() ?: ResponseInfoDto(null, null)
+                val pagedResponse = InfoMapper.mapResponseInfo(pagedResponseDto)
 
-            val data = pagedResponse.results
-            val nextPageNumber: Int? = UriParser.parseNextOrPrevPageInUri(pagedResponse.info.next)
+                val data = pagedResponse.results
+                val nextPageNumber: Int? =
+                    UriParser.parseNextOrPrevPageInUri(pagedResponse.info.next)
             val prevPageNumber: Int? = UriParser.parseNextOrPrevPageInUri(pagedResponse.info.prev)
 
             LoadResult.Page(
