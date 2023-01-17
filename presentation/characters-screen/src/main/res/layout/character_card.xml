@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/general_indent">
+
+        <ImageView
+            android:id="@+id/character_avatar"
+            android:layout_width="@dimen/character_card_size"
+            android:layout_height="@dimen/character_card_size"
+            android:contentDescription="@string/avatar"
+            tools:src="@drawable/ic_ram_avatar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/character_card_size"
+            android:layout_marginStart="@dimen/margin_info_start_end">
+
+            <TextView
+                android:id="@+id/character_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_info_top"
+                android:textSize="@dimen/text_size_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Rick Sanchez" />
+
+            <ImageView
+                android:id="@+id/icon_life_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_icon_life_status_end"
+                android:contentDescription="@string/life_status_description"
+                app:layout_constraintBottom_toBottomOf="@+id/life_status"
+                app:layout_constraintEnd_toStartOf="@+id/life_status"
+                app:layout_constraintTop_toTopOf="@+id/life_status"
+                tools:src="@drawable/ic_status_alive" />
+
+            <TextView
+                android:id="@+id/life_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_info_start_end"
+                android:layout_marginBottom="@dimen/margin_life_status_bottom"
+                android:textSize="@dimen/text_size_life_status"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Alive" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

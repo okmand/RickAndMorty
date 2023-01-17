@@ -15,6 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "Rick and Morty"
 include ':app'
 include ':core'
-include ':presentation:users-screen'
+include ':presentation:characters-screen'
 include ':data'
 include ':domain'

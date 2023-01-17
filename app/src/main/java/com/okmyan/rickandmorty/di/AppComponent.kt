@@ -1,23 +1,29 @@
 package com.okmyan.rickandmorty.di
 
 import android.app.Application
+import com.okmyan.rickandmorty.charactersscreen.di.CharactersScreenDependencies
+import com.okmyan.rickandmorty.core.scopes.AppScope
+import com.okmyan.rickandmorty.data.di.DataModule
+import com.okmyan.rickandmorty.data.di.NetworkModule
 import com.okmyan.rickandmorty.data.di.RepositoryModule
-import com.okmyan.rickandmorty.domain.usecases.UsersUseCase
-import com.okmyan.rickandmorty.usersscreen.di.UsersScreenDependencies
+import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
+import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Scope
 
 @AppScope
 @Component(
     modules = [
-        AppModule::class,
+        DataModule::class,
+        NetworkModule::class,
         RepositoryModule::class,
     ]
 )
-interface AppComponent : UsersScreenDependencies {
+interface AppComponent : CharactersScreenDependencies {
 
-    override val usersUseCase: UsersUseCase
+    override val charactersUseCase: CharactersUseCase
+
+    override val lifeStatusesUseCase: LifeStatusesUseCase
 
     @Component.Builder
     interface Builder {
@@ -25,13 +31,8 @@ interface AppComponent : UsersScreenDependencies {
         @BindsInstance
         fun application(application: Application): Builder
 
-        @BindsInstance
-        fun infoForDataService(@InfoForDataServiceQualifier info: String): Builder
-
         fun build(): AppComponent
+
     }
 
 }
-
-@Scope
-annotation class AppScope
