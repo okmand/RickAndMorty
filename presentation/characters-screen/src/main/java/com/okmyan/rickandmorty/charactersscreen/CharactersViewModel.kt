@@ -7,9 +7,8 @@ import androidx.paging.cachedIn
 import com.okmyan.rickandmorty.domain.models.Character
 import com.okmyan.rickandmorty.domain.usecases.CharactersUseCase
 import com.okmyan.rickandmorty.domain.usecases.LifeStatusesUseCase
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -17,6 +16,15 @@ internal class CharactersViewModel(
     private val charactersUseCase: CharactersUseCase,
     private val lifeStatusesUseCase: LifeStatusesUseCase,
 ) : ViewModel() {
+
+    private val handlerException = CoroutineExceptionHandler { _, throwable ->
+        Log.e(
+            TAG_IN_CoroutineExceptionHandler,
+            "Exception handled: ${throwable.message} \n${throwable.stackTraceToString()}"
+        )
+    }
+    private val vmScope =
+        CoroutineScope(Dispatchers.Main.immediate + SupervisorJob() + handlerException)
 
     private var _charactersFlow: Flow<PagingData<Character>> = flowOf()
     val charactersFlow: Flow<PagingData<Character>>
@@ -41,25 +49,19 @@ internal class CharactersViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun getCharacters() {
-        viewModelScope.launch {
+        vmScope.launch {
             _charactersFlow = _currentLifeStatusFlow
                 .flatMapLatest { status ->
                     charactersUseCase.getCharacters(status)
                 }
-                .cachedIn(viewModelScope)
-                .catch { e ->
-                    Log.d(TAG, "Error ", e)
-                }
+                .flowOn(Dispatchers.IO)
+                .cachedIn(vmScope)
         }
     }
 
     private fun getLifeStatuses() {
-        viewModelScope.launch {
-            try {
-                _lifeStatusesFlow = lifeStatusesUseCase.execute()
-            } catch (e: Exception) {
-                Log.d(TAG, "Error ", e)
-            }
+        vmScope.launch(Dispatchers.IO) {
+            _lifeStatusesFlow = lifeStatusesUseCase.execute()
         }
     }
 
@@ -77,7 +79,7 @@ internal class CharactersViewModel(
     }
 
     private companion object {
-        private const val TAG = "CharactersViewModel"
+        private const val TAG_IN_CoroutineExceptionHandler = "CoroutineException"
     }
 
 }
