@@ -5,9 +5,9 @@ import com.okmyan.rickandmorty.data.constants.HttpAttributes.Companion.FIELD_PAG
 
 object UriParser {
 
-    fun parseNextOrPrevPageInUri(uri: String): Int? {
-        val nextOrPrevPageQuery = Uri.parse(uri).getQueryParameter(FIELD_PAGE)
-        return nextOrPrevPageQuery?.toInt()
+    fun parseNextOrPrevPageInUri(uriString: String): Int? {
+        val nextOrPrevPageQuery = Uri.parse(uriString).getQueryParameter(FIELD_PAGE)
+        return nextOrPrevPageQuery?.toIntOrNull()
     }
 
 }

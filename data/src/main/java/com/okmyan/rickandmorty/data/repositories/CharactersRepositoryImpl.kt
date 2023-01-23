@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.google.common.base.Optional
 import com.okmyan.rickandmorty.data.constants.Sizes.Companion.PAGE_SIZE
+import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.paging.datasource.CharactersPagingDataSource
 import com.okmyan.rickandmorty.data.service.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
     private val service: CharactersApi,
+    private val infoMapper: InfoMapper,
 ) : CharactersRepository {
 
     override suspend fun getCharacters(
@@ -27,6 +29,7 @@ class CharactersRepositoryImpl @Inject constructor(
                 CharactersPagingDataSource(
                     service = service,
                     lifeStatus = lifeStatus,
+                    infoMapper = infoMapper,
                 )
             },
         ).flow

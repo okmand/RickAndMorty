@@ -1,6 +1,8 @@
 package com.okmyan.rickandmorty.data.di
 
 import com.okmyan.rickandmorty.core.scopes.AppScope
+import com.okmyan.rickandmorty.data.mappers.InfoMapper
+import com.okmyan.rickandmorty.data.mappers.LifeStatusMapper
 import com.okmyan.rickandmorty.data.service.CharactersApi
 import dagger.Module
 import dagger.Provides
@@ -13,6 +15,12 @@ class DataModule {
     @Provides
     fun provideCharactersApi(retrofit: Retrofit): CharactersApi {
         return retrofit.create(CharactersApi::class.java)
+    }
+
+    @AppScope
+    @Provides
+    fun provideInfoMapper(): InfoMapper {
+        return InfoMapper(LifeStatusMapper)
     }
 
 }

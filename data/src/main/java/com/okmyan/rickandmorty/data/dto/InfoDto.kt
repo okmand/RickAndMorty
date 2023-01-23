@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 data class InfoDto(
 
     @SerialName("count")
-    val count: Long?,
+    val charactersCount: Long?,
 
     @SerialName("pages")
     val pages: Long?,
 
     @SerialName("next")
-    val next: String?,
+    val nextPage: String?,
 
     @SerialName("prev")
-    val prev: String?,
+    val prevPage: String?,
 
     )
