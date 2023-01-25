@@ -1,12 +1,17 @@
 package com.okmyan.rickandmorty.data.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.okmyan.rickandmorty.core.scopes.AppScope
 import com.okmyan.rickandmorty.data.constants.HttpAttributes.Companion.BASE_URL
+import com.okmyan.rickandmorty.data.constants.HttpAttributes.Companion.CONTENT_TYPE
 import dagger.Module
 import dagger.Provides
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class NetworkModule {
@@ -18,12 +23,21 @@ class NetworkModule {
             .build()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     @AppScope
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideConverterFactory(): Converter.Factory {
+        val contentType = CONTENT_TYPE.toMediaType()
+        val json = Json { ignoreUnknownKeys = true }
+        return json.asConverterFactory(contentType)
+    }
+
+    @AppScope
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, factory: Converter.Factory): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(factory)
             .client(okHttpClient)
             .build()
     }

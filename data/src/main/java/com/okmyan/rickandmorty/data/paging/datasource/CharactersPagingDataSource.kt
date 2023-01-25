@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 class CharactersPagingDataSource(
     private val service: CharactersApi,
     private val lifeStatus: Optional<String>,
+    private val infoMapper: InfoMapper,
 ) : PagingSource<Int, Character>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> =
@@ -26,22 +27,23 @@ class CharactersPagingDataSource(
                     service.getCharacters(page = pageNumber)
                 }
                 val pagedResponseDto = response.body() ?: ResponseInfoDto(null, null)
-                val pagedResponse = InfoMapper.mapResponseInfo(pagedResponseDto)
+                val pagedResponse = infoMapper.mapResponseInfo(pagedResponseDto)
 
                 val data = pagedResponse.results
                 val nextPageNumber: Int? =
-                    UriParser.parseNextOrPrevPageInUri(pagedResponse.info.next)
-            val prevPageNumber: Int? = UriParser.parseNextOrPrevPageInUri(pagedResponse.info.prev)
+                    UriParser.parseNextOrPrevPageInUri(pagedResponse.info.nextPage)
+                val prevPageNumber: Int? =
+                    UriParser.parseNextOrPrevPageInUri(pagedResponse.info.prevPage)
 
-            LoadResult.Page(
-                data = data,
-                prevKey = prevPageNumber,
-                nextKey = nextPageNumber
-            )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+                LoadResult.Page(
+                    data = data,
+                    prevKey = prevPageNumber,
+                    nextKey = nextPageNumber
+                )
+            } catch (e: Exception) {
+                LoadResult.Error(e)
+            }
         }
-    }
 
     override fun getRefreshKey(state: PagingState<Int, Character>): Int {
         val anchorPosition = state.anchorPosition ?: return INITIAL_VALUE

@@ -3,18 +3,26 @@ package com.okmyan.rickandmorty.domain.models
 sealed class LifeStatus(val value: String) {
 
     companion object {
-        fun getStatus(status: String): LifeStatus {
-            return when (status) {
-                STATUS_ALIVE -> AliveStatus()
-                STATUS_DEAD -> DeadStatus()
-                else -> UnknownStatus()
-            }
-        }
 
         const val STATUS_ALIVE = "Alive"
         const val STATUS_UNKNOWN = "Unknown"
         const val STATUS_DEAD = "Dead"
         const val EMPTY_VALUE = "-"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LifeStatus
+
+        if (value != other.value) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
     }
 
 }

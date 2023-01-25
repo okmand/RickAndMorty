@@ -3,7 +3,9 @@ package com.okmyan.rickandmorty.data.mappers
 import com.okmyan.rickandmorty.data.dto.*
 import com.okmyan.rickandmorty.domain.models.*
 
-object InfoMapper {
+class InfoMapper(
+    private val lifeStatusMapper: LifeStatusMapper,
+) {
 
     fun mapResponseInfo(dto: ResponseInfoDto): ResponseInfo {
         val info = dto.info?.let { mapInfo(it) } ?: Info.defaultInfo()
@@ -20,10 +22,10 @@ object InfoMapper {
     private fun mapInfo(dto: InfoDto): Info {
         return dto.run {
             Info(
-                count = count ?: 0,
+                charactersCount = charactersCount ?: 0,
                 pages = pages ?: 0,
-                next = next ?: "",
-                prev = prev ?: "",
+                nextPage = nextPage ?: "",
+                prevPage = prevPage ?: "",
             )
         }
     }
@@ -32,7 +34,7 @@ object InfoMapper {
         val origin = dto.origin?.let { mapOrigin(it) } ?: Origin.defaultOrigin()
         val location = dto.location?.let { mapLocation(it) } ?: Location.defaultLocation()
         val episode = dto.episode?.filterNotNull() ?: emptyList()
-        val status = LifeStatus.getStatus(dto.status ?: "")
+        val status = lifeStatusMapper.mapLifeStatus(dto.status ?: "")
 
         return dto.run {
             Character(
