@@ -3,11 +3,16 @@ package com.okmyan.rickandmorty.charactersscreen
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.LoadType
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.okmyan.rickandmorty.charactersscreen.adapters.CharacterAdapter
@@ -15,12 +20,11 @@ import com.okmyan.rickandmorty.charactersscreen.adapters.LoaderStateAdapter
 import com.okmyan.rickandmorty.charactersscreen.databinding.FragmentCharactersScreenBinding
 import com.okmyan.rickandmorty.charactersscreen.di.CharactersScreenComponentViewModel
 import com.okmyan.rickandmorty.domain.models.LifeStatus.Companion.EMPTY_VALUE
+import com.okmyan.rickandmorty.utils.exceptions.NoInternetException
 import com.skydoves.powerspinner.DefaultSpinnerAdapter
 import com.skydoves.powerspinner.PowerSpinnerView
 import dagger.Lazy
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -58,6 +62,11 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             .withLoadStateFooter(
                 footer = LoaderStateAdapter { characterAdapter.retry() }
             )
+        lifecycleScope.launch {
+            characterAdapter.loadStateFlow.collectLatest { loadStates ->
+                sourceStateListener(loadStates.source)
+            }
+        }
 
         charactersViewModel.charactersFlow.onEach {
             characterAdapter.submitData(it)
@@ -76,6 +85,35 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             }
         }
 
+    }
+
+    private fun sourceStateListener(sourceStates: LoadStates) {
+        var throwable: Throwable? = null
+        var type: LoadType? = null
+        sourceStates.forEach { loadType, loadState ->
+            if (loadState is LoadState.Error) {
+                throwable = loadState.error
+                type = loadType
+            }
+        }
+
+        when (throwable) {
+            is NoInternetException -> showErrorMessage(
+                title = getString(R.string.check_connection),
+                message = type?.name ?: ""
+            )
+            null -> {}
+            else -> showErrorMessage(
+                title = getString(R.string.something_went_wrong),
+                message = type?.name ?: ""
+            )
+
+        }
+
+    }
+
+    private fun showErrorMessage(title: String, message: String) {
+        Toast.makeText(this.context, "$title + $message", Toast.LENGTH_SHORT).show()
     }
 
     private fun onRefreshListener(swipeRefreshLayout: SwipeRefreshLayout) {

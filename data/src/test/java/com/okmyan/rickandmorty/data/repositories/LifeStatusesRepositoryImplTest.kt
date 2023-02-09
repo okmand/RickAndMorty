@@ -1,6 +1,6 @@
 package com.okmyan.rickandmorty.data.repositories
 
-import com.okmyan.rickandmorty.data.service.LifeStatusesService
+import com.okmyan.rickandmorty.data.services.LifeStatusesService
 import com.okmyan.rickandmorty.domain.models.AliveStatus
 import com.okmyan.rickandmorty.domain.models.DeadStatus
 import com.okmyan.rickandmorty.domain.models.LifeStatus

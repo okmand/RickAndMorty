@@ -6,7 +6,7 @@ import com.google.common.base.Optional
 import com.okmyan.rickandmorty.data.dto.ResponseInfoDto
 import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.parsers.UriParser
-import com.okmyan.rickandmorty.data.service.CharactersApi
+import com.okmyan.rickandmorty.data.services.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +20,9 @@ class CharactersPagingDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> =
         withContext(Dispatchers.IO) {
             val pageNumber = params.key ?: INITIAL_VALUE
+
             return@withContext try {
+
                 val response = if (lifeStatus.isPresent) {
                     service.getCharacters(page = pageNumber, status = lifeStatus.get())
                 } else {

@@ -1,6 +1,6 @@
 package com.okmyan.rickandmorty.data.repositories
 
-import com.okmyan.rickandmorty.data.service.LifeStatusesService
+import com.okmyan.rickandmorty.data.services.LifeStatusesService
 import com.okmyan.rickandmorty.domain.models.LifeStatus
 import com.okmyan.rickandmorty.domain.repositories.LifeStatusesRepository
 import kotlinx.coroutines.Dispatchers
