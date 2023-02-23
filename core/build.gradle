@@ -32,6 +32,6 @@ android {
 dependencies {
 
     // Dagger 2
-    implementation 'com.google.dagger:dagger:2.44.2'
+    implementation 'com.google.dagger:dagger:2.45'
 
 }
