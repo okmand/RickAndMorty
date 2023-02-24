@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="cyan">#4bacb8</color>
+
+    <color name="cloud">#FFEBF1FB</color>
+    <color name="light_gray">#FFBCC7CB</color>
+    <color name="dark_gray">#FF171717</color>
+    <color name="charcoal">#FF181C1F</color>
+    <color name="smoke">#FF222F35</color>
+
+    <color name="light_blue">#FF538DDD</color>
+    <color name="dark_blue">#FF002B4E</color>
+
+    <color name="status_alive">#30FF38</color>
+    <color name="status_unknown">#999999</color>
+    <color name="status_dead">#FF2020</color>
+
+</resources>

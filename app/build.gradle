@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId 'com.okmyan.rickandmorty'
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName '1.0'
@@ -44,6 +44,7 @@ dependencies {
     implementation project(':data')
     implementation project(':presentation:characters-screen')
     implementation project(':domain')
+    implementation project(':ui-kit')
 
     // Tests
     testImplementation 'junit:junit:4.13.2'

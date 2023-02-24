@@ -8,30 +8,38 @@
     android:orientation="vertical"
     tools:context=".CharactersScreenFragment">
 
-    <com.skydoves.powerspinner.PowerSpinnerView
-        android:id="@+id/life_statuses_spinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/cards_horizontal_indent"
-        android:layout_marginVertical="@dimen/cards_vertical_indent"
-        android:background="@drawable/spinner_background"
-        android:hint="@string/life_statuses_spinner_title"
-        android:padding="10dp"
-        android:textColor="@android:color/tab_indicator_text"
-        android:textColorHint="@android:color/tab_indicator_text"
-        android:textSize="@dimen/text_size_life_status"
-        app:spinner_arrow_animate="true"
-        app:spinner_arrow_gravity="end"
-        app:spinner_arrow_padding="8dp"
-        app:spinner_arrow_tint="@android:color/tab_indicator_text"
-        app:spinner_dismiss_notified_select="true"
-        app:spinner_divider_color="@android:color/tab_indicator_text"
-        app:spinner_divider_show="false"
-        app:spinner_divider_size="0.4dp"
-        app:spinner_popup_animation="dropdown"
-        app:spinner_popup_background="@drawable/spinner_background"
-        app:spinner_popup_elevation="14dp"
-        app:spinner_popup_focusable="true" />
+        android:orientation="horizontal">
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/life_statuses_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/cards_horizontal_indent"
+            android:layout_marginVertical="@dimen/cards_vertical_indent"
+            android:background="@drawable/spinner_background"
+            android:hint="@string/life_statuses_spinner_title"
+            android:padding="10dp"
+            android:textColor="@android:color/tab_indicator_text"
+            android:textColorHint="@android:color/tab_indicator_text"
+            android:textSize="@dimen/text_size_life_status"
+            app:spinner_arrow_animate="true"
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="8dp"
+            app:spinner_arrow_tint="@android:color/tab_indicator_text"
+            app:spinner_dismiss_notified_select="true"
+            app:spinner_divider_color="@android:color/tab_indicator_text"
+            app:spinner_divider_show="false"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@drawable/spinner_background"
+            app:spinner_popup_elevation="14dp"
+            app:spinner_popup_focusable="true" />
+
+    </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_container"
