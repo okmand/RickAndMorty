@@ -39,7 +39,6 @@ class SpeedyLinearLayoutManager : LinearLayoutManager {
 
         linearSmoothScroller.targetPosition = position
         startSmoothScroll(linearSmoothScroller)
-
     }
 
     companion object {

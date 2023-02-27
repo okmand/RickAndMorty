@@ -64,13 +64,13 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             characters.smoothScrollToPosition(0)
         }.launchIn(lifecycleScope)
 
+        binding.appbar.setOnClickListener {
+            characters.smoothScrollToPosition(0)
+        }
+
         charactersViewModel.lifeStatusesFlow.onEach { statuses ->
             setLifeStatuses(binding.lifeStatusesSpinner, statuses)
         }.launchIn(lifecycleScope)
-
-        binding.filters.setOnClickListener {
-            characters.smoothScrollToPosition(0)
-        }
 
         lifecycleScope.launch {
             val status = charactersViewModel.currentLifeStatusFlow
