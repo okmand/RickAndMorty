@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  Text sizes  -->
+    <dimen name="text_size_name">30sp</dimen>
+    <dimen name="text_size_life_status">20sp</dimen>
+    <dimen name="text_size_item_loader_error">12sp</dimen>
+
+    <!--  Indents  -->
+    <dimen name="cards_vertical_indent">5dp</dimen>
+    <dimen name="cards_horizontal_indent">8dp</dimen>
+    <dimen name="general_indent">5dp</dimen>
+
+    <!--  View sizes  -->
+    <dimen name="oval_life_status_size">8dp</dimen>
+    <dimen name="character_photo_size">120dp</dimen>
+    <dimen name="character_info_height">120dp</dimen>
+    <dimen name="progress_bar_item_loader_size">30dp</dimen>
+
+    <!--  Radii  -->
+    <dimen name="card_radius">15dp</dimen>
+    <dimen name="button_retry_radius">10dp</dimen>
+
+    <!--  Margins  -->
+    <dimen name="character_photo_margin">10dp</dimen>
+    <dimen name="character_name_margin_top">5dp</dimen>
+    <dimen name="character_info_margin">10dp</dimen>
+    <dimen name="life_status_margin_bottom">5dp</dimen>
+    <dimen name="icon_life_status_margin_end">7dp</dimen>
+
+</resources>

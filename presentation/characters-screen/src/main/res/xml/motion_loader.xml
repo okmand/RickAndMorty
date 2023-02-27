@@ -30,8 +30,8 @@
 
         <Constraint
             android:id="@+id/loader"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/progress_bar_item_loader_size"
+            android:layout_height="@dimen/progress_bar_item_loader_size"
             android:visibility="invisible"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +63,8 @@
 
         <Constraint
             android:id="@+id/loader"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/progress_bar_item_loader_size"
+            android:layout_height="@dimen/progress_bar_item_loader_size"
             android:visibility="visible"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"

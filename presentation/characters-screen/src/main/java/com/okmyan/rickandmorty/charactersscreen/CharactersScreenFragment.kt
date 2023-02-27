@@ -8,12 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.okmyan.rickandmorty.charactersscreen.adapters.CharacterAdapter
 import com.okmyan.rickandmorty.charactersscreen.adapters.LoaderStateAdapter
 import com.okmyan.rickandmorty.charactersscreen.databinding.FragmentCharactersScreenBinding
 import com.okmyan.rickandmorty.charactersscreen.di.CharactersScreenComponentViewModel
+import com.okmyan.rickandmorty.charactersscreen.layoutmanagers.SpeedyLinearLayoutManager
 import com.okmyan.rickandmorty.domain.models.LifeStatus.Companion.EMPTY_VALUE
 import com.skydoves.powerspinner.DefaultSpinnerAdapter
 import com.skydoves.powerspinner.PowerSpinnerView
@@ -53,7 +53,7 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
         }
 
         val characters = binding.charactersList
-        characters.layoutManager = LinearLayoutManager(binding.root.context)
+        characters.layoutManager = SpeedyLinearLayoutManager(binding.root.context)
         characters.adapter = characterAdapter
             .withLoadStateFooter(
                 footer = LoaderStateAdapter { characterAdapter.retry() }
@@ -63,6 +63,10 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             characterAdapter.submitData(it)
             characters.smoothScrollToPosition(0)
         }.launchIn(lifecycleScope)
+
+        binding.appbar.setOnClickListener {
+            characters.smoothScrollToPosition(0)
+        }
 
         charactersViewModel.lifeStatusesFlow.onEach { statuses ->
             setLifeStatuses(binding.lifeStatusesSpinner, statuses)
