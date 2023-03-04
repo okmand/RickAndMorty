@@ -7,7 +7,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.okmyan.rickandmorty.charactersscreen.R
+import com.okmyan.rickandmorty.ui_kit.R
 import com.okmyan.rickandmorty.charactersscreen.databinding.CharacterCardBinding
 import com.okmyan.rickandmorty.domain.models.AliveStatus
 import com.okmyan.rickandmorty.domain.models.Character

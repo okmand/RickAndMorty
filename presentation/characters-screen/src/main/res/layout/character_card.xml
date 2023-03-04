@@ -3,59 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/cards_horizontal_indent"
+    android:layout_marginVertical="@dimen/cards_vertical_indent"
+    app:cardCornerRadius="@dimen/card_radius">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/foregroundContentColor"
         android:orientation="horizontal"
         android:padding="@dimen/general_indent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/character_avatar"
-            android:layout_width="@dimen/character_card_size"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_height="@dimen/character_card_size"
-            android:contentDescription="@string/avatar"
-            tools:src="@drawable/ic_ram_avatar" />
+            android:layout_width="@dimen/character_photo_size"
+            android:layout_height="@dimen/character_photo_size"
+            android:layout_margin="@dimen/character_photo_margin"
+            android:contentDescription="@string/avatar_description"
+            app:shapeAppearanceOverlay="@style/RoundImageView"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/character_card_size"
-            android:layout_marginStart="@dimen/margin_info_start_end">
+            android:layout_height="@dimen/character_info_height"
+            android:layout_margin="@dimen/character_info_margin">
 
             <TextView
                 android:id="@+id/character_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_info_top"
+                android:layout_marginTop="@dimen/character_name_margin_top"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textSize="@dimen/text_size_name"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Rick Sanchez" />
-
-            <ImageView
-                android:id="@+id/icon_life_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_icon_life_status_end"
-                android:contentDescription="@string/life_status_description"
-                app:layout_constraintBottom_toBottomOf="@+id/life_status"
-                app:layout_constraintEnd_toStartOf="@+id/life_status"
-                app:layout_constraintTop_toTopOf="@+id/life_status"
-                tools:src="@drawable/ic_status_alive" />
+                tools:text="@tools:sample/full_names" />
 
             <TextView
                 android:id="@+id/life_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_info_start_end"
-                android:layout_marginBottom="@dimen/margin_life_status_bottom"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textSize="@dimen/text_size_life_status"
+                android:layout_marginBottom="@dimen/life_status_margin_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Alive" />
+
+            <ImageView
+                android:id="@+id/icon_life_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/icon_life_status_margin_end"
+                android:contentDescription="@string/life_status_description"
+                app:layout_constraintBottom_toBottomOf="@+id/life_status"
+                app:layout_constraintEnd_toStartOf="@+id/life_status"
+                app:layout_constraintTop_toTopOf="@+id/life_status"
+                tools:src="@drawable/ic_status_alive" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
