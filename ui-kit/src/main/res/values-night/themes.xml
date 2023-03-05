@@ -13,8 +13,25 @@
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
+        <item name="alertDialogTheme">@style/Theme.RickAndMorty.AlertDialogTheme</item>
+
         <!-- Custom color -->
         <item name="foregroundContentColor">@color/dark_gray</item>
         <item name="backgroundContentColor">@color/black</item>
+
+        <item name="progressBarColor">?attr/colorOnPrimary</item>
+        <item name="progressBarBackgroundColor">?attr/colorPrimary</item>
+
     </style>
+
+    <style name="Theme.RickAndMorty.AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:background">?attr/foregroundContentColor</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/light_blue</item>
+    </style>
+
 </resources>

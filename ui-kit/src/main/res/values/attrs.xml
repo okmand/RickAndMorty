@@ -4,4 +4,7 @@
     <attr name="foregroundContentColor" format="reference" />
     <attr name="backgroundContentColor" format="reference" />
 
+    <attr name="progressBarColor" format="reference" />
+    <attr name="progressBarBackgroundColor" format="reference" />
+
 </resources>

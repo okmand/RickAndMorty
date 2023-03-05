@@ -14,8 +14,25 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="alertDialogTheme">@style/Theme.RickAndMorty.AlertDialogTheme</item>
+
         <!-- Custom color -->
         <item name="backgroundContentColor">@color/cloud</item>
         <item name="foregroundContentColor">@color/white</item>
+
+        <item name="progressBarColor">?attr/colorOnPrimary</item>
+        <item name="progressBarBackgroundColor">?attr/colorPrimary</item>
+
     </style>
+
+    <style name="Theme.RickAndMorty.AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:background">?attr/foregroundContentColor</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/cyan</item>
+    </style>
+
 </resources>

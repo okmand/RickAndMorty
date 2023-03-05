@@ -3,32 +3,37 @@ package com.okmyan.rickandmorty.charactersscreen
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
-import androidx.paging.LoadType
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.okmyan.rickandmorty.charactersscreen.R.layout.fragment_characters_screen
+import com.okmyan.rickandmorty.charactersscreen.R.string.life_statuses_spinner_title
 import com.okmyan.rickandmorty.charactersscreen.adapters.CharacterAdapter
 import com.okmyan.rickandmorty.charactersscreen.adapters.LoaderStateAdapter
 import com.okmyan.rickandmorty.charactersscreen.databinding.FragmentCharactersScreenBinding
 import com.okmyan.rickandmorty.charactersscreen.di.CharactersScreenComponentViewModel
 import com.okmyan.rickandmorty.charactersscreen.layoutmanagers.SpeedyLinearLayoutManager
 import com.okmyan.rickandmorty.domain.models.LifeStatus.Companion.EMPTY_VALUE
+import com.okmyan.rickandmorty.ui_kit.R
+import com.okmyan.rickandmorty.ui_kit.extensions.showAlertDialog
 import com.okmyan.rickandmorty.utils.exceptions.NoInternetException
+import com.okmyan.rickandmorty.utils.extensions.getThemeColor
 import com.skydoves.powerspinner.DefaultSpinnerAdapter
 import com.skydoves.powerspinner.PowerSpinnerView
 import dagger.Lazy
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
+class CharactersScreenFragment : Fragment(fragment_characters_screen) {
 
     @Inject
     lateinit var characterAdapter: CharacterAdapter
@@ -51,9 +56,17 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
 
         val binding = FragmentCharactersScreenBinding.bind(view)
 
-        val swipeRefreshLayout = binding.swipeRefreshContainer
-        swipeRefreshLayout.setOnRefreshListener {
-            onRefreshListener(swipeRefreshLayout)
+        val swipeRefresh = binding.swipeRefresh
+        context?.let { context ->
+            swipeRefresh.setColorSchemeColors(
+                context.getThemeColor(R.attr.progressBarColor)
+            )
+            swipeRefresh.setProgressBackgroundColorSchemeColor(
+                context.getThemeColor(R.attr.progressBarBackgroundColor)
+            )
+        }
+        swipeRefresh.setOnRefreshListener {
+            onRefreshListener(swipeRefresh)
         }
 
         val characters = binding.charactersList
@@ -62,6 +75,7 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
             .withLoadStateFooter(
                 footer = LoaderStateAdapter { characterAdapter.retry() }
             )
+
         lifecycleScope.launch {
             characterAdapter.loadStateFlow.collectLatest { loadStates ->
                 sourceStateListener(loadStates.source)
@@ -91,38 +105,31 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
 
     }
 
+    private fun onRefreshListener(swipeRefreshLayout: SwipeRefreshLayout) {
+        swipeRefreshLayout.isRefreshing = false
+        characterAdapter.refresh()
+    }
+
     private fun sourceStateListener(sourceStates: LoadStates) {
         var throwable: Throwable? = null
-        var type: LoadType? = null
-        sourceStates.forEach { loadType, loadState ->
+        sourceStates.forEach { _, loadState ->
             if (loadState is LoadState.Error) {
                 throwable = loadState.error
-                type = loadType
             }
         }
 
         when (throwable) {
-            is NoInternetException -> showErrorMessage(
+            is NoInternetException -> showAlertDialog(
                 title = getString(R.string.check_connection),
-                message = type?.name ?: ""
+                positiveButton = getString(R.string.retry),
+                positiveButtonCallback = { characterAdapter.retry() },
             )
             null -> {}
-            else -> showErrorMessage(
+            else -> showAlertDialog(
                 title = getString(R.string.something_went_wrong),
-                message = type?.name ?: ""
+                message = getString(R.string.contact_support),
             )
-
         }
-
-    }
-
-    private fun showErrorMessage(title: String, message: String) {
-        Toast.makeText(this.context, "$title + $message", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun onRefreshListener(swipeRefreshLayout: SwipeRefreshLayout) {
-        swipeRefreshLayout.isRefreshing = false
-        characterAdapter.refresh()
     }
 
     private fun setLifeStatuses(spinner: PowerSpinnerView, statuses: List<String>) {
@@ -140,7 +147,7 @@ class CharactersScreenFragment : Fragment(R.layout.fragment_characters_screen) {
 
     private fun setTextToSpinner(spinner: PowerSpinnerView, status: String) {
         if (status == EMPTY_VALUE) {
-            spinner.text = getString(R.string.life_statuses_spinner_title)
+            spinner.text = getString(life_statuses_spinner_title)
         } else {
             spinner.text = status
         }

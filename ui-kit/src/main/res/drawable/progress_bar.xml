@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="360">
+    <layer-list>
+
+        <item>
+            <shape android:shape="oval">
+                <solid android:color="?attr/progressBarBackgroundColor" />
+            </shape>
+        </item>
+
+        <item>
+            <shape
+                android:innerRadiusRatio="5"
+                android:shape="ring"
+                android:thicknessRatio="15"
+                android:useLevel="false">
+
+                <gradient
+                    android:angle="0"
+                    android:endColor="#00FFFFFF"
+                    android:startColor="?attr/progressBarColor"
+                    android:type="sweep"
+                    android:useLevel="false" />
+            </shape>
+        </item>
+
+    </layer-list>
+</rotate>
