@@ -1,4 +1,4 @@
-package com.okmyan.rickandmorty.data.service
+package com.okmyan.rickandmorty.data.services
 
 import com.okmyan.rickandmorty.domain.models.AliveStatus
 import com.okmyan.rickandmorty.domain.models.DeadStatus

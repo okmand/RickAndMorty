@@ -3,7 +3,7 @@ package com.okmyan.rickandmorty.data.di
 import com.okmyan.rickandmorty.core.scopes.AppScope
 import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.mappers.LifeStatusMapper
-import com.okmyan.rickandmorty.data.service.CharactersApi
+import com.okmyan.rickandmorty.data.services.CharactersApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

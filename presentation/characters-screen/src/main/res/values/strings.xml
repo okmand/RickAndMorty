@@ -6,7 +6,5 @@
 
     <!--  Titles  -->
     <string name="life_statuses_spinner_title">Life status</string>
-    <string name="retry">Retry</string>
-    <string name="check_connection">Check your internet connection</string>
 
 </resources>

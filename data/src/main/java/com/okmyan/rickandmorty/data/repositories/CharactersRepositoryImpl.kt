@@ -7,7 +7,7 @@ import com.google.common.base.Optional
 import com.okmyan.rickandmorty.data.constants.Sizes.Companion.PAGE_SIZE
 import com.okmyan.rickandmorty.data.mappers.InfoMapper
 import com.okmyan.rickandmorty.data.paging.datasource.CharactersPagingDataSource
-import com.okmyan.rickandmorty.data.service.CharactersApi
+import com.okmyan.rickandmorty.data.services.CharactersApi
 import com.okmyan.rickandmorty.domain.models.Character
 import com.okmyan.rickandmorty.domain.repositories.CharactersRepository
 import kotlinx.coroutines.Dispatchers
