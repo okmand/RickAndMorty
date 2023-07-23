@@ -26,6 +26,7 @@ import com.okmyan.rickandmorty.utils.extensions.getThemeColor
 import com.skydoves.powerspinner.DefaultSpinnerAdapter
 import com.skydoves.powerspinner.PowerSpinnerView
 import dagger.Lazy
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
@@ -83,8 +84,11 @@ class CharactersScreenFragment : Fragment(fragment_characters_screen) {
         }
 
         charactersViewModel.charactersFlow.onEach {
-            characterAdapter.submitData(it)
-            characters.smoothScrollToPosition(0)
+            lifecycleScope.launch {
+                characterAdapter.submitData(it)
+                delay(300)
+                characters.smoothScrollToPosition(0)
+            }
         }.launchIn(lifecycleScope)
 
         binding.appbar.setOnClickListener {
@@ -96,8 +100,7 @@ class CharactersScreenFragment : Fragment(fragment_characters_screen) {
         }.launchIn(lifecycleScope)
 
         lifecycleScope.launch {
-            val status = charactersViewModel.currentLifeStatusFlow
-                .firstOrNull()
+            val status = charactersViewModel.currentLifeStatusFlow.firstOrNull()
             status?.let {
                 setTextToSpinner(binding.lifeStatusesSpinner, it)
             }
@@ -124,7 +127,9 @@ class CharactersScreenFragment : Fragment(fragment_characters_screen) {
                 positiveButton = getString(R.string.retry),
                 positiveButtonCallback = { characterAdapter.retry() },
             )
+
             null -> {}
+
             else -> showAlertDialog(
                 title = getString(R.string.something_went_wrong),
                 message = getString(R.string.contact_support),
